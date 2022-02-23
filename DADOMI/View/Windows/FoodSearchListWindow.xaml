@@ -1,0 +1,65 @@
+﻿<Window x:Class="DADOMI.View.Windows.FoodSearchListWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DADOMI.View.Windows"
+        mc:Ignorable="d"
+        Title="DADOMI" Height="450" Width="500"
+        ResizeMode="NoResize"
+        x:Name="FSLW">
+    <Window.Resources>
+        <Image x:Key="addImage" Source="/DADOMI;component/View/Resources/add.png"/>
+    </Window.Resources>
+    
+    <Grid DataContext="{StaticResource foodVm}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="FoodName" Grid.ColumnSpan="2"
+                   FontSize="20"
+                   HorizontalAlignment="Left"/>
+        <TextBlock Text="Maker" Margin="0,0,30,0" Grid.Column="2"
+                   FontSize="20" 
+                   HorizontalAlignment="Right"/>
+        <ListView Grid.Row="1" Grid.ColumnSpan="3"
+                  ItemsSource="{Binding Path=Food.FOOD_INFO.FOOD_LIST, Converter={StaticResource FSLCvt}}"
+                  SelectedItem="{Binding Path=SelectedFood}"
+                  SelectedIndex="{Binding Path=FoodSelectCommand.SelectIndex}"/>
+        <Border Grid.Row="2" Grid.ColumnSpan="2" Margin="30,13,0,13"
+                BorderBrush="LightGray" BorderThickness="4" CornerRadius="15">
+
+            <TextBox Text="{Binding Path=FoodSelectCommand.EatenSize}" Grid.Row="2" Grid.ColumnSpan="2" 
+                     BorderBrush="White"
+                     Margin="5,3,5,3" FontSize="17" VerticalAlignment="Center"
+                     GotFocus="TextBox_GotFocus"
+                     LostFocus="TextBox_LostFocus"/>
+        </Border>
+        <TextBlock Text="(g)"
+                   Margin="10"
+                   Grid.Row="2" Grid.Column="1"
+                   FontSize="20"
+                   VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        
+        <Button Content="{StaticResource addImage}" 
+                Grid.Row="2" Grid.Column="3"
+                Background="White" BorderBrush="White" Padding="10" 
+                Command="{Binding FoodSelectCommand}">
+            <Button.CommandParameter>
+                <MultiBinding Converter="{StaticResource MultiCvt}">
+                    <MultiBinding.Bindings>
+                        <Binding Source="{StaticResource userVm}"/>
+                        <Binding ElementName="FSLW"/>
+                    </MultiBinding.Bindings>
+                </MultiBinding>
+            </Button.CommandParameter>
+        </Button>
+    </Grid>
+</Window>

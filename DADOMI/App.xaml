@@ -1,0 +1,22 @@
+﻿<Application x:Class="DADOMI.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:DADOMI"
+             xmlns:vm="clr-namespace:DADOMI.ViewModel"
+             xmlns:cv="clr-namespace:DADOMI.ViewModel.Converter"
+             StartupUri="MainWindow.xaml"
+             x:Name="TotalApp">
+    <Application.Resources>
+        <vm:FrameVM x:Key="frameVm"/>
+        <vm:UserVM x:Key="userVm"/>
+        <vm:FoodVM x:Key="foodVm"/>
+        <vm:ActivityVM x:Key="actVm"/>
+        <vm:GraphVM x:Key="graphVm"/>
+        <cv:MultiBindingConverter x:Key="MultiCvt"/>
+        <cv:FoodSearchListConverter x:Key="FSLCvt"/>
+        <cv:ActivitySelectListConverter x:Key="ASLCvt"/>
+        <cv:GoalKcalToCHConverter x:Key="KTCHCvt"/>
+        <cv:GoalKcalToPTConverter x:Key="KTPTCvt"/>
+        <cv:GoalKcalToFTConverter x:Key="KTFTCvt"/>
+    </Application.Resources>
+</Application>

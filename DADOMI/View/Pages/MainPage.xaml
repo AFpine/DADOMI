@@ -1,0 +1,84 @@
+﻿<Page x:Class="DADOMI.View.Pages.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:DADOMI.View.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="500" ShowsNavigationUI="False"
+      Title="MainPage"
+      x:Name="Main"> 
+    <Page.Resources>
+        <Image x:Key="foodImage" Source="/DADOMI;component/View/Resources/meal.png"/>
+        <Image x:Key="activityImage" Source="/DADOMI;component/View/Resources/gym.png"/>
+        <Image x:Key="statsImage" Source="/DADOMI;component/View/Resources/growth.png"/>
+        <Image x:Key="saveImage" Source="/DADOMI;component/View/Resources/save.png"/>
+        <Image x:Key="userImage" Source="/DADOMI;component/View/Resources/download.png"/>
+        <Image x:Key="helpImage" Source="/DADOMI;component/View/Resources/question.png"/>
+        <Style x:Key="buttonStyle">
+            <Setter Property="Button.Background" Value="White"/>
+            <Setter Property="Button.BorderBrush" Value="Black"/>
+            <Setter Property="Button.Padding" Value="50"/>
+        </Style>
+    </Page.Resources>
+    <Grid DataContext="{StaticResource frameVm}">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Button Grid.Row="0" Grid.Column="0" x:Name="foodButton"
+                Style="{StaticResource buttonStyle}"
+                Content="{StaticResource foodImage}"
+                Command="{Binding Path=naviCommand}"
+                CommandParameter="Food"
+                IsEnabled="{Binding Source={StaticResource userVm}, Path=UserExist}"/>
+
+        <Button Grid.Row="0" Grid.Column="1" x:Name="acitivityButton"
+                Style="{StaticResource buttonStyle}"
+                Content="{StaticResource activityImage}"
+                Command="{Binding Path=naviCommand}"
+                CommandParameter="Activity" 
+                IsEnabled="{Binding Source={StaticResource userVm}, Path=UserExist}"/>
+        
+        
+        <!--StatsCommand-->
+        <Button Grid.Row="1" Grid.Column="0" x:Name="statsButton"
+                Style="{StaticResource buttonStyle}"
+                Padding="55" Content="{StaticResource statsImage}"
+                Command="{Binding Source={StaticResource graphVm}, Path=StatsCommand}"
+                IsEnabled="{Binding Source={StaticResource userVm}, Path=UserExist}">
+            <Button.CommandParameter>
+                <MultiBinding Converter="{StaticResource MultiCvt}">
+                    <MultiBinding.Bindings>
+                        <Binding Source="{StaticResource userVm}"/>
+                        <Binding Source="{StaticResource frameVm}"/>
+                    </MultiBinding.Bindings>
+                </MultiBinding>
+            </Button.CommandParameter>
+        </Button>
+        
+        <!--SaveCommand-->
+        <Button Grid.Row="1" Grid.Column="1" x:Name="saveButton"
+                Style="{StaticResource buttonStyle}"
+                Padding="60" Content="{StaticResource saveImage}"
+                Command="{Binding Source={StaticResource userVm}, Path=SaveCommand}"
+                IsEnabled="{Binding Source={StaticResource userVm}, Path=UserExist}"/>
+        <!--UserButtonCommand-->
+        <Button Grid.Row="2" Grid.Column="0" x:Name="userButton"
+                Style="{StaticResource buttonStyle}"
+                Content="{StaticResource userImage}"
+                Command="{Binding Path=userCommand}"/>
+
+        <!--HelpButtonCommand-->
+        <Button Grid.Row="2" Grid.Column="1" x:Name="helpButton"
+                Style="{StaticResource buttonStyle}"
+                Padding="60" Content="{StaticResource helpImage}"
+                Command="{Binding Path=helpCommand}"/>
+
+    </Grid>
+</Page>

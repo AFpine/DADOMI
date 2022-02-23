@@ -1,0 +1,40 @@
+﻿<Page x:Class="DADOMI.View.Pages.StartPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:DADOMI.View.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="500"
+      Title="StartPage"
+      ShowsNavigationUI="False">
+    <Page.Resources>
+        <Image x:Key="runImage" Source="/DADOMI;component/View/Resources/run.png"/>
+    </Page.Resources>
+    <Grid Background="White"
+          DataContext="{StaticResource frameVm}">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label Content="DADOMI"
+               FontSize="80"
+               Grid.Row="0"
+               Grid.RowSpan="2"
+               VerticalAlignment="Center"
+               HorizontalAlignment="Center" FontFamily="Segoe Script"/>
+
+        <Button Content="{StaticResource runImage}"
+                Grid.Row="2" Grid.RowSpan="2"
+                HorizontalAlignment="Center" VerticalAlignment="Center"
+                Background="White" BorderBrush="White"
+                Margin="80" Padding="10"
+                x:Name="startButton"
+                Command="{Binding Path=naviCommand}"
+                CommandParameter="Home"/>
+
+
+    </Grid>
+</Page>

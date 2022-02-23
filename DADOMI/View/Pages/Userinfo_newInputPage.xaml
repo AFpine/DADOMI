@@ -1,0 +1,119 @@
+﻿<Page x:Class="DADOMI.View.Pages.Userinfo_newInputPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:DADOMI.View.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Userinfo_newInputPage" Height="350" Width="350"
+      ShowsNavigationUI="False"
+      x:Name="NewInputPage">
+    <Page.Resources>
+        <Image x:Key="addImage" Source="/DADOMI;component/View/Resources/addfile.png"/>
+        <Image x:Key="maleImage" Source="/DADOMI;component/View/Resources/man.png"/>
+        <Image x:Key="femaleImage" Source="/DADOMI;component/View/Resources/female.png"/>
+        <Style x:Key="txtboxStyle">
+            <Setter Property="TextBox.Margin" Value="10"/>
+            <Setter Property="TextBox.Height" Value="25"/>
+            <Setter Property="TextBox.BorderBrush" Value="Black"/>
+            <Setter Property="TextBox.VerticalContentAlignment" Value="Center"/>
+        </Style>
+    </Page.Resources>
+    <Grid Background="White"
+          Width="350" Height="350">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <DatePicker x:Name="DateP"
+                    VerticalContentAlignment="Center"
+                    Height="30"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Left"/>
+        <TextBox x:Name="UserNameTbox"
+                 Height="50"
+                 FontSize="14"
+                 BorderBrush="Black"
+                 Text="Type your name"
+                 GotFocus="UserNameTbox_GotFocus"
+                 LostFocus="UserNameTbox_LostFocus" VerticalContentAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold"/>
+
+        <StackPanel Grid.Column="1"
+                    Grid.ColumnSpan="2" VerticalAlignment="Center">
+            <TextBox x:Name="UserBirthTbox"
+                     Style="{StaticResource txtboxStyle}"
+                     Text="Type your Birthday in 8-numbers"
+                     GotFocus="UserBirthTbox_GotFocus"
+                     LostFocus="UserBirthTbox_LostFocus"/>
+            <TextBox x:Name="UserHeightTbox"
+                     Style="{StaticResource txtboxStyle}"
+                     Text="Type your Height (cm)"
+                     GotFocus="UserHeightTbox_GotFocus"
+                     LostFocus="UserHeightTbox_LostFocus"/>
+            <TextBox x:Name="UserWeightTbox"
+                     Style="{StaticResource txtboxStyle}"
+                     Text="Type your Weight (kg)"
+                     GotFocus="UserWeightTbox_GotFocus"
+                     LostFocus="UserWeightTbox_LostFocus"/>
+            <TextBox x:Name="UserGoalTbox"
+                     Style="{StaticResource txtboxStyle}"
+                     Text="Type your Goal Weight (kg)"
+                     GotFocus="UserGoalTbox_GotFocus"
+                     LostFocus="UserGoalTbox_LostFocus"/>
+        </StackPanel>
+
+
+
+        <RadioButton x:Name="UserSexRadBtn_Male"
+                        Content="{StaticResource maleImage}"
+                        Grid.Row="1" Grid.ColumnSpan="2"
+                        Padding="15"
+                        GroupName="UserSexRadBtn"
+                        IsChecked="True" HorizontalAlignment="Center"/>
+        <RadioButton x:Name="UserSexRadBtn_Female"
+                        Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+                        Padding="15"
+                        Content="{StaticResource femaleImage}"
+                        GroupName="UserSexRadBtn" HorizontalAlignment="Center"/>
+        <Button Content="Browse"
+                Grid.Row="2"
+                Margin="0"
+                Height="20"
+                HorizontalAlignment="Left"
+                Command="{Binding Source={StaticResource userVm}, Path=BrowseCommand}"/>
+        <Label Content="{Binding Source={StaticResource userVm}, Path=FileLoc}"
+               BorderBrush="Black"
+               Height="30"
+               Grid.Row="2" Grid.ColumnSpan="2"
+               VerticalContentAlignment="Center" HorizontalAlignment="Left"
+               Margin="40,0,0,0"/>
+        <Button Content="{StaticResource addImage}"
+                Background="White"
+                BorderBrush="White"
+                Padding="20"
+                Grid.Row="2" Grid.Column="2"
+                Command="{Binding Source={StaticResource userVm}, Path=NewUserinfo_InputCommand}">
+            <Button.CommandParameter>
+                <MultiBinding Converter="{StaticResource MultiCvt}">
+                    <MultiBinding.Bindings>
+                        <Binding ElementName="UserNameTbox"/>
+                        <Binding ElementName="UserBirthTbox"/>
+                        <Binding ElementName="UserHeightTbox"/>
+                        <Binding ElementName="UserWeightTbox"/>
+                        <Binding ElementName="UserGoalTbox"/>
+                        <Binding ElementName="UserSexRadBtn_Male"/>
+                        <Binding ElementName="DateP"/>
+                        <Binding ElementName="NewInputPage"/>
+                    </MultiBinding.Bindings>
+                </MultiBinding>
+            </Button.CommandParameter>
+        </Button>
+    </Grid>
+</Page>

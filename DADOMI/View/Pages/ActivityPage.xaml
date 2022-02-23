@@ -1,0 +1,93 @@
+﻿<Page x:Class="DADOMI.View.Pages.ActivityPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:DADOMI.View.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="500"
+      Title="ActivityPage"
+      ShowsNavigationUI="False">
+    <Page.Resources>
+        <Image x:Key="addImage" Source="/DADOMI;component/View/Resources/add.png"/>
+        <Image x:Key="homeImage" Source="/DADOMI;component/View/Resources/house.png"/>
+        <Style x:Key="buttonStyle">
+            <Setter Property="Button.Background" Value="White"/>
+            <Setter Property="Button.BorderBrush" Value="White"/>
+        </Style>
+        <Style x:Key="borderStyle">
+            <Setter Property="Border.BorderBrush" Value="LightGray"/>
+            <Setter Property="Border.BorderThickness" Value="4"/>
+            <Setter Property="Border.CornerRadius" Value="15"/>
+        </Style>
+    </Page.Resources>
+    
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="0.75*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Row="1" Grid.ColumnSpan="5" Margin="20,5"
+                Style="{StaticResource borderStyle}">
+            
+            <ListView FontSize="15" BorderBrush="White" Margin="5"
+                      ItemsSource="{Binding Source={StaticResource userVm}, Path=UserActList}" />
+        </Border>
+
+        <ComboBox Grid.Row="3" Grid.ColumnSpan="2"
+                  Margin="40,20,0,20" FontSize="18"
+                  ItemsSource="{Binding Source={StaticResource actVm}, Path=Ac.Activities, Converter={StaticResource ASLCvt}}"
+                  SelectedIndex="{Binding Source={StaticResource actVm}, Path=ActivitySelectCommand.SelectIndex}"/>
+
+        <Border Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2"
+                Style="{StaticResource borderStyle}" Margin="17">
+            
+            <TextBox BorderBrush="white" 
+                     FontSize="17" Margin="5,2,5,2"
+                     VerticalAlignment="Center" 
+                     x:Name="minuteTb"
+                     GotFocus="minuteTb_GotFocus" LostFocus="minuteTb_LostFocus"
+                     Text="{Binding Source={StaticResource actVm},Path=ActivitySelectCommand.ActMinute}"/>
+        </Border>
+
+        <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" 
+                   Text="총 운동 시간(분)" FontSize="15"/>
+        <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"
+                   HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5"
+                   Text="{Binding Source={StaticResource userVm}, Path=User.UserActMinute}" FontSize="20"/>
+        
+        <TextBlock Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="3" HorizontalAlignment="Center"
+                   Text="소모한 칼로리(kcal)" FontSize="15"/>
+        <TextBlock Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="3" 
+                   HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5"
+                   Text="{Binding Source={StaticResource userVm},Path=User.UserActKcal}" FontSize="20"/>
+
+        <Button Grid.Row="3" Grid.Column="5"
+                Style="{StaticResource buttonStyle}"
+                Content="{StaticResource addImage}" Padding="10"
+                Command="{Binding Source={StaticResource actVm},Path=ActivitySelectCommand}">
+            <Button.CommandParameter>
+                <MultiBinding Converter="{StaticResource MultiCvt}">
+                    <MultiBinding.Bindings>
+                        <Binding Source="{StaticResource userVm}"/>
+                        <Binding ElementName="minuteTb"/>
+                    </MultiBinding.Bindings>
+                </MultiBinding>
+            </Button.CommandParameter>
+        </Button>
+        <Button Style="{StaticResource buttonStyle}"
+                BorderBrush="Black"
+                Content="{StaticResource homeImage}"
+                Command="{Binding Source={StaticResource frameVm}, Path=naviCommand}"
+                CommandParameter="Home"/>
+    </Grid>
+</Page>

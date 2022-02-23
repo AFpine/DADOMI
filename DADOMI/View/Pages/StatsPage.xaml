@@ -1,0 +1,135 @@
+﻿<Page x:Class="DADOMI.View.Pages.StatsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:DADOMI.View.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="500"
+      Title="StatsPage">
+    <Page.Resources>
+        <Image x:Key="homeImage" Source="/DADOMI;component/View/Resources/house.png"/>
+        <Style x:Key="barStyle">
+            <Setter Property="ProgressBar.Height" Value="10"/>
+            <Setter Property="ProgressBar.Margin" Value="10,15"/>
+            <Setter Property="ProgressBar.VerticalAlignment" Value="Bottom"/>
+        </Style>
+        <Style x:Key="nametxtblockStyle">
+            <Setter Property="TextBlock.FontSize" Value="15"/>
+            <Setter Property="TextBlock.Margin" Value="10,5,0,0"/>
+            <Setter Property="TextBlock.HorizontalAlignment" Value="Left"/>
+        </Style>
+        <Style x:Key="valuetxtblockStyle">
+            <Setter Property="TextBlock.FontSize" Value="15"/>
+            <Setter Property="TextBlock.Margin" Value="0,5,10,0"/>
+            <Setter Property="TextBlock.HorizontalAlignment" Value="Right"/>
+        </Style>
+    </Page.Resources>
+    <!--BMI, 섭취칼로리 추이, 유저정보-->
+    <Grid Background="White"
+          DataContext="{StaticResource graphVm}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="1.75*"/>
+        </Grid.RowDefinitions>
+        
+        <Button Background="White"
+                Width="100" Height="34" HorizontalAlignment="Left"
+                Content="{StaticResource homeImage}"
+                Command="{Binding Source={StaticResource frameVm}, Path=naviCommand}"
+                CommandParameter="Home"/>
+        
+        <TabControl Grid.Row="1" Margin="10">
+            <TabItem Header="Kcal">
+                <Frame Source="/View/Pages/ChartKcalPage.xaml"
+                       NavigationUIVisibility="Hidden" Navigated="Frame_Navigated"/>
+            </TabItem>
+            
+            <TabItem Header="Weight">
+                <Frame Source="/View/Pages/ChartWeightPage.xaml"
+                       NavigationUIVisibility="Hidden"/>
+            </TabItem>
+
+            <TabItem Header="Activity">
+                <Frame Source="/View/Pages/ChartActivityPage.xaml"
+                       NavigationUIVisibility="Hidden"/>
+            </TabItem>
+        </TabControl>
+        
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0"
+                       Style="{StaticResource valuetxtblockStyle}"
+                       DataContext="{StaticResource userVm}">
+                <Run Text="{Binding User.UserKcal}"/>
+                <Run Text="/"/>
+                <Run Text="{Binding User.UserGoalKcal}"/>
+                <Run Text="Kcal"/>
+            </TextBlock>
+            <TextBlock Grid.Row="0" Grid.Column="0"
+                       Text="칼로리"
+                       Style="{StaticResource nametxtblockStyle}"/>
+            <ProgressBar Grid.Row="0" Grid.Column="0"
+                         x:Name="kcalBar"
+                         Style="{StaticResource barStyle}"
+                         Minimum="0" Maximum="{Binding Source={StaticResource userVm}, Path=User.UserGoalKcal}"
+                         Value="{Binding Source={StaticResource userVm}, Path=User.UserKcal}" Foreground="#FF6FC4EC"/>
+            <TextBlock Grid.Row="0" Grid.Column="1"
+                       Style="{StaticResource valuetxtblockStyle}"
+                       DataContext="{StaticResource userVm}">
+                <Run Text="{Binding Path=User.UserCH}"/>
+                <Run Text="/"/>
+                <Run Text="{Binding Path=User.UserGoalKcal, Converter={StaticResource KTCHCvt}}"/>
+                <Run Text="g"/>
+            </TextBlock>
+            <TextBlock Grid.Row="0" Grid.Column="1"
+                       Text="탄수화물" 
+                       Style="{StaticResource nametxtblockStyle}"/>
+            <ProgressBar Grid.Row="0" Grid.Column="1"
+                         x:Name="carhideBar"
+                         Style="{StaticResource barStyle}"
+                         Minimum="0" Maximum="{Binding Source={StaticResource userVm}, Path=User.UserGoalKcal, Converter={StaticResource KTCHCvt}}"
+                         Value="{Binding Source={StaticResource userVm}, Path=User.UserCH}" Foreground="#FF69EE99"/>
+            <TextBlock Grid.Row="1" Grid.Column="0"
+                       Style="{StaticResource valuetxtblockStyle}"
+                       DataContext="{StaticResource userVm}">
+                <Run Text="{Binding Path=User.UserPT}"/>
+                <Run Text="/"/>
+                <Run Text="{Binding Path=User.UserGoalKcal, Converter={StaticResource KTPTCvt}}"/>
+                <Run Text="g"/>
+            </TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="0"
+                       Text="단백질"
+                       Style="{StaticResource nametxtblockStyle}"/>
+            <ProgressBar Grid.Row="1" Grid.Column="0"
+                         x:Name="proteinBar"
+                         Style="{StaticResource barStyle}"
+                         Minimum="0" Maximum="{Binding Source={StaticResource userVm}, Path=User.UserGoalKcal, Converter={StaticResource KTPTCvt}}"
+                         Value="{Binding Source={StaticResource userVm}, Path=User.UserPT}" Foreground="#FFFDBA77"/>
+            <TextBlock Grid.Row="1" Grid.Column="1"
+                       Style="{StaticResource valuetxtblockStyle}"
+                       DataContext="{StaticResource userVm}">
+                <Run Text="{Binding Path=User.UserFT}"/>
+                <Run Text="/"/>
+                <Run Text="{Binding Path=User.UserGoalKcal, Converter={StaticResource KTFTCvt}}"/>
+                <Run Text="g"/>
+            </TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="1"
+                       Text="지방" 
+                       Style="{StaticResource nametxtblockStyle}"/>
+            <ProgressBar Grid.Row="1" Grid.Column="1"
+                         x:Name="fatBar"
+                         Style="{StaticResource barStyle}"
+                         Minimum="0" Maximum="{Binding Source={StaticResource userVm}, Path=User.UserGoalKcal, Converter={StaticResource KTFTCvt}}"
+                         Value="{Binding Source={StaticResource userVm}, Path=User.UserFT}" Foreground="#FFF7F053"/>
+        </Grid>
+    </Grid>
+</Page>

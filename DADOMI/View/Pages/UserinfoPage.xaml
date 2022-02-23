@@ -1,0 +1,43 @@
+﻿<Page x:Class="DADOMI.View.Pages.UserinfoPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:DADOMI.View.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="350" d:DesignWidth="350"
+      Title="UserinfoPage"
+      Background="White"
+      x:Name="UserinfoP">
+    <Page.Resources>
+        <Image x:Key="addImage" Source="/DADOMI;component/View/Resources/addfile.png"/>
+        <Image x:Key="loadImage" Source="/DADOMI;component/View/Resources/document.png"/>
+        <Style x:Key="btnStyle">
+            <Setter Property="Button.Margin" Value="80"/>
+            <Setter Property="Button.Padding" Value="10"/>
+            <Setter Property="Button.Background" Value="White"/>
+            <Setter Property="Button.BorderBrush" Value="White"/>
+            <Setter Property="Button.VerticalAlignment" Value="Center"/>
+        </Style>
+    </Page.Resources>
+    
+    <Grid DataContext="{StaticResource frameVm}">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Button Grid.Row="0" Grid.RowSpan="2"
+                Style="{StaticResource btnStyle}"
+                Content="{StaticResource addImage}"
+                Command="{Binding Path=userinfoCommand}"
+                CommandParameter="New"/>
+        <Button Grid.Row="1" Grid.RowSpan="2"
+                Style="{StaticResource btnStyle}"
+                Content="{StaticResource loadImage}"
+                Command="{Binding Source={StaticResource userVm}, Path=LoadCommand}"
+                CommandParameter="{Binding ElementName=UserinfoP}"/>
+
+    </Grid>
+</Page>

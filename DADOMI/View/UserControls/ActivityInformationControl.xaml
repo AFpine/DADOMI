@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="DADOMI.View.UserControls.ActivityInformationControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DADOMI.View.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="20" d:DesignWidth="420">
+    <UserControl.Resources>
+        <Image x:Key="xImage" Source="/DADOMI;component/View/Resources/remove.png"/>
+    </UserControl.Resources>
+    <Grid Background="White" Height="Auto" Width="410" VerticalAlignment="Center">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1.3*"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="0.4*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock x:Name="AIC_name" Grid.Column="0"
+                   HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <TextBlock x:Name="AIC_kcal" Grid.Column="1"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock x:Name="AIC_minute" Text="" Grid.Column="2"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button x:Name="FIC_deleteBtn"                 
+                Grid.Column="3" Padding="1.5"
+                Background="White" BorderBrush="White"
+                Content="{StaticResource xImage}"
+                Command="{Binding Source={StaticResource actVm}, Path=ActivityDeleteCommand}">
+            <Button.CommandParameter>
+                <MultiBinding Converter="{StaticResource MultiCvt}">
+                    <MultiBinding.Bindings>
+                        <Binding Source="{StaticResource userVm}"/>
+                        <Binding ElementName="AIC_name"/>
+                        <Binding ElementName="AIC_minute"/>
+                    </MultiBinding.Bindings>
+                </MultiBinding>
+            </Button.CommandParameter>
+        </Button>
+    </Grid>
+</UserControl>

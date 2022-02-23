@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="DADOMI.View.UserControls.FoodSearchListControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DADOMI.View.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="30" d:DesignWidth="450">
+    <Grid Background="White" Height="Auto" Width="450" DataContext="{StaticResource foodVm}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBlock x:Name="FSLC_name" Grid.Column="0"
+                   HorizontalAlignment="Left"/>
+        <TextBlock x:Name="FSLC_maker" Grid.Column="1"
+                   HorizontalAlignment="Right"/>
+    </Grid>
+</UserControl>
