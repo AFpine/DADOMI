@@ -11,7 +11,7 @@ namespace DADOMI.ViewModel
 {
     public class FoodAPI
     {
-        public const string API_KEY = "47415e43709f4eeba43b";
+        public const string API_KEY = "API_KEY"; // 식품영양성분DB API KEY
         public const string BASE_URL = "http://openapi.foodsafetykorea.go.kr/api/{0}/I2790/json/1/500/DESC_KOR={1}";
 
         public static FoodInfo GetFoodInfo(string foodName)
